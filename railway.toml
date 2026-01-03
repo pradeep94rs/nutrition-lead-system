@@ -1,0 +1,5 @@
+[build]
+rootDirectory = "dcokerfile"
+
+[deploy]
+startCommand = "gunicorn -k uvicorn.workers.UvicornWorker main:app"
