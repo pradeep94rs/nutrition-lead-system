@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+gunicorn
+python-dotenv
+requests
+gspread
+google-auth
+pytz

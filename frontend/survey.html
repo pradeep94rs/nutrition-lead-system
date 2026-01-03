@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Health & Lifestyle Clarity Form</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px 10px;
+    background:
+        linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+        url("https://fmcggurus.com/wp-content/uploads/2019/06/apple-blue-background-close-up-1353366.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.container {
+    max-width: 640px;
+    background: rgba(255,255,255,0.85);
+    padding: 28px;
+    margin: auto;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+h2 { text-align: center; color: #1f5f4a; }
+
+.step-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #259e62;          /* green theme */
+    margin-bottom: 18px;
+    margin-top: 6px;
+    letter-spacing: 0.3px;
+}
+
+.description {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.step { display: none; }
+.step.active { display: block; }
+
+.step-indicator {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+label { font-weight: bold; margin-top: 16px; display: block; }
+.required { color: red; }
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+}
+
+input[readonly] { background: #eee; }
+
+/* ✅ FIXED CHECKBOX LAYOUT */
+.checkbox-group {
+    margin-top: 12px;
+}
+
+.checkbox-item {
+    display: grid;
+    grid-template-columns: 22px auto;
+    gap: 12px;
+    align-items: start;
+    margin-bottom: 10px;
+}
+
+.checkbox-item span {
+    white-space: normal;
+    line-height: 1.4;
+}
+
+.checkbox-item.disabled {
+    opacity: 0.45;
+}
+
+.buttons {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    padding: 10px 26px;
+    border-radius: 25px;
+    border: none;
+    background: linear-gradient(135deg, #2f855a, #68d391);
+    color: white;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+}
+
+</style>
+</head>
+
+<body>
+<div class="container" id="surveyContainer">
+<h2>Health & Lifestyle Clarity Form</h2>
+
+<div class="description">
+This form helps me understand your current health situation.<br>
+There is no obligation to join anything.
+</div>
+
+<div class="step-indicator" id="stepIndicator">Section 1 of 6</div>
+
+<!-- SECTION 1 -->
+<div class="step active" id="step1">
+<div class="step-title">Basic Details</div>
+
+<label>Full Name<span class="required">*</span></label>
+<input id="name">
+
+<label>WhatsApp Number<span class="required">*</span></label>
+<input id="contact">
+
+<label>City & State<span class="required">*</span></label>
+<input id="city_state">
+
+<label>Date of Birth<span class="required">*</span></label>
+<input type="date" id="dob">
+
+<label>Age<span class="required">*</span></label>
+<input id="age" readonly>
+
+<label>Gender<span class="required">*</span></label>
+<select id="gender">
+<option value="">Select</option>
+<option>Male</option>
+<option>Female</option>
+<option>Prefer not to say</option>
+</select>
+
+<div class="buttons">
+<span></span>
+<button onclick="nextStep(1)">Next →</button>
+</div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="step" id="step2">
+<div class="step-title">Health Goal & Background</div>
+
+<label>What is your primary health goal right now?<span class="required">*</span></label>
+
+<div class="checkbox-group">
+<div class="checkbox-item">
+<input type="checkbox" id="goal_loss" name="primary_goals" value="Weight loss">
+<span>Weight loss</span>
+</div>
+
+<div class="checkbox-item">
+<input type="checkbox" id="goal_gain" name="primary_goals" value="Weight gain">
+<span>Weight gain</span>
+</div>
+
+<div class="checkbox-item"><input type="checkbox" name="primary_goals" value="Hormonal balance"><span>Hormonal balance</span></div>
+<div class="checkbox-item"><input type="checkbox" name="primary_goals" value="Low energy / fatigue"><span>Low energy / fatigue</span></div>
+<div class="checkbox-item"><input type="checkbox" name="primary_goals" value="Digestion issues"><span>Digestion issues</span></div>
+<div class="checkbox-item"><input type="checkbox" name="primary_goals" value="Lifestyle discipline"><span>Lifestyle discipline</span></div>
+<div class="checkbox-item"><input type="checkbox" name="primary_goals" value="Overall health improvement"><span>Overall health improvement</span></div>
+</div>
+
+<label>How long have you been facing this issue?<span class="required">*</span></label>
+<select id="issue_duration">
+<option value="">Select</option>
+<option>Less than 6 months</option>
+<option>6 months – 1 year</option>
+<option>1–3 years</option>
+<option>More than 3 years</option>
+</select>
+
+<div class="buttons">
+<button onclick="prevStep(2)">← Back</button>
+<button onclick="nextStep(2)">Next →</button>
+</div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="step" id="step3">
+<div class="step-title">Current Reality (Reflection Section)</div>
+
+<label>How would you describe your current lifestyle?<span class="required">*</span></label>
+<select id="lifestyle_discipline">
+<option value="">Select</option>
+<option>Very disciplined</option>
+<option>Somewhat disciplined</option>
+<option>Inconsistent</option>
+<option>Completely irregular</option>
+</select>
+
+<label>What do you feel is your biggest challenge right now?<span class="required">*</span></label>
+<div class="checkbox-group">
+<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Lack of consistency"><span>Lack of consistency</span></div>
+<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Emotional eating"><span>Emotional eating</span></div>
+<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Stress"><span>Stress</span></div>
+<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Low energy"><span>Low energy</span></div>
+<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="No proper guidance"><span>No proper guidance</span></div>
+<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="No support system"><span>No support system</span></div>
+<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Confused with too much information"><span>Confused with too much information</span></div>
+<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Time management"><span>Time management</span></div>
+</div>
+
+<div class="buttons">
+<button onclick="prevStep(3)">← Back</button>
+<button onclick="nextStep(3)">Next →</button>
+</div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="step" id="step4">
+<div class="step-title">Readiness & Mindset</div>
+
+<label>On a scale of 1–10, how important is improving your health for you right now? (1 = Not important, 10 = Extremely important)<span class="required">*</span></label>
+<input type="number" min="1" max="10" id="health_importance_score">
+
+<label>Have you tried anything earlier to improve your health?<span class="required">*</span></label>
+<select id="past_attempts">
+<option value="">Select</option>
+<option>Yes, once or twice</option>
+<option>Yes, multiple times</option>
+<option>No</option>
+</select>
+
+<div class="buttons">
+<button onclick="prevStep(4)">← Back</button>
+<button onclick="nextStep(4)">Next →</button>
+</div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="step" id="step5">
+<div class="step-title">Communication Process</div>
+
+<label> I usually connect with form responses between 4:00 PM – 5:00 PM (IST).Are you comfortable with this time?<span class="required">*</span></label>
+<select id="time_comfort">
+<option value="">Select</option>
+<option>Yes, that works for me</option>
+<option>I may need an alternative</option>
+<option>Not comfortable</option>
+</select>
+
+<label>Which language are you comfortable with?<span class="required">*</span></label>
+<div class="checkbox-group">
+<div class="checkbox-item"><input type="checkbox" name="preferred_languages" value="English"><span>English</span></div>
+<div class="checkbox-item"><input type="checkbox" name="preferred_languages" value="Kannada"><span>Kannada</span></div>
+<div class="checkbox-item"><input type="checkbox" name="preferred_languages" value="Hindi"><span>Hindi</span></div>
+</div>
+
+<div class="buttons">
+<button onclick="prevStep(5)">← Back</button>
+<button onclick="nextStep(5)">Next →</button>
+</div>
+</div>
+
+<!-- SECTION 6 -->
+<div class="step" id="step6">
+<div class="step-title">Open Expression</div>
+
+<label>Is there anything else you would like me to know about your situation? (optional)</label>
+<textarea id="additional_notes"></textarea>
+
+<div class="buttons">
+<button onclick="prevStep(6)">← Back</button>
+<button id="submitBtn" onclick="submitFinal()">Submit</button>
+</div>
+</div>
+</div>
+
+<!-- THANK YOU SCREEN -->
+<div class="container" id="thankYouScreen" style="display:none;">
+    <h2>Thank You 🙏</h2>
+
+    <p style="text-align:center; font-size:15px; line-height:1.6;">
+        Thank you for sharing your details.<br><br>
+        I’ll review your responses and reach out only if I feel I can genuinely support you.<br><br>
+        <b>Please note:</b> Not everyone is taken forward for a clarity call.
+    </p>
+</div>
+
+<!-- REFERRAL MODAL -->
+<div class="modal" id="referralModal">
+  <div class="modal-content">
+    <h3>One quick question (optional)</h3>
+    <p>How did you hear about us?</p>
+
+    <select id="referral_source">
+      <option value="">Prefer not to say</option>
+      <option>Instagram</option>
+      <option>WhatsApp</option>
+      <option>Friend / Family</option>
+      <option>YouTube</option>
+      <option>Google Search</option>
+      <option>Other</option>
+    </select>
+
+    <br><br>
+    <button onclick="submitReferral()">Submit</button>
+    <button onclick="skipReferral()" style="background:#aaa;">Skip</button>
+  </div>
+</div>
+
+<script>
+let isSubmitting = false;
+
+const getChecked = name =>
+    [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x => x.value);
+
+/* STEP NAV */
+function updateIndicator(s){ stepIndicator.innerText = `Section ${s} of 6`; }
+function nextStep(s){ if(validateStep(s)){ step(s,s+1); } }
+function prevStep(s){ step(s,s-1); }
+function step(a,b){ document.getElementById(`step${a}`).classList.remove("active"); document.getElementById(`step${b}`).classList.add("active"); updateIndicator(b); }
+
+function validateStep(step) {
+    const el = document.getElementById(`step${step}`);
+
+    // Validate ONLY visible step
+    if (!el || !el.classList.contains("active")) return true;
+
+    // Validate required inputs, selects, AND textarea
+    const fields = el.querySelectorAll(
+        "input:not([type=checkbox]):not([readonly]), select, textarea"
+    );
+
+    for (const f of fields) {
+        if (!f.value || !f.value.trim()) {
+            alert(`${f.id || "Field"}: Field required`);
+            f.focus();
+            return false;
+        }
+    }
+
+    // Checkbox rules per step
+    const rules = {
+        2: "primary_goals",
+        3: "biggest_challenges",
+        5: "preferred_languages"
+    };
+
+    if (rules[step]) {
+        const checked = el.querySelectorAll(
+            `input[name="${rules[step]}"]:checked`
+        );
+        if (checked.length === 0) {
+            alert("Select at least one option");
+            return false;
+        }
+    }
+
+    // 🔢 Health importance score range check (ONLY Section 4)
+    if (step === 4) {
+        const scoreEl = document.getElementById("health_importance_score");
+        const score = Number(scoreEl.value);
+
+        if (isNaN(score) || score < 1 || score > 10) {
+            alert("Health importance score must be between 1 and 10");
+            scoreEl.focus();
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+
+
+/* AGE */
+dob.addEventListener("change",()=>{
+    const d=new Date(dob.value),t=new Date();
+    let a=t.getFullYear()-d.getFullYear();
+    if(t<new Date(t.getFullYear(),d.getMonth(),d.getDate()))a--;
+    age.value=a;
+});
+
+/* WEIGHT MUTUAL EXCLUSION */
+function weightConflict(){
+    const loss=goal_loss, gain=goal_gain;
+    if(loss.checked){
+        gain.checked=false; gain.disabled=true; gain.parentElement.classList.add("disabled");
+    } else if(gain.checked){
+        loss.checked=false; loss.disabled=true; loss.parentElement.classList.add("disabled");
+    } else {
+        loss.disabled=gain.disabled=false;
+        loss.parentElement.classList.remove("disabled");
+        gain.parentElement.classList.remove("disabled");
+    }
+}
+goal_loss.onchange=goal_gain.onchange=weightConflict;
+
+/* SUBMIT */
+async function submitFinal() {
+
+    // 🚫 Block multiple clicks
+    if (isSubmitting) return;
+    isSubmitting = true;
+
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    btn.innerText = "Submitting...";
+
+    try {
+        const payload = {
+            name: document.getElementById("name").value,
+            contact: document.getElementById("contact").value,
+            city_state: document.getElementById("city_state").value,
+            dob: document.getElementById("dob").value,
+            age: Number(document.getElementById("age").value),
+            gender: document.getElementById("gender").value,
+
+            primary_goals: getChecked("primary_goals"),
+            issue_duration: document.getElementById("issue_duration").value,
+            lifestyle_discipline: document.getElementById("lifestyle_discipline").value,
+            biggest_challenges: getChecked("biggest_challenges"),
+
+            health_importance_score: Number(document.getElementById("health_importance_score").value),
+            past_attempts: document.getElementById("past_attempts").value,
+            time_comfort: document.getElementById("time_comfort").value,
+            preferred_languages: getChecked("preferred_languages"),
+
+            additional_notes: document.getElementById("additional_notes").value || "",
+            consent: true
+        };
+
+        const r = await fetch("http://127.0.0.1:8000/submit-lead", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        const d = await r.json();
+
+        if (!r.ok) {
+            let msg = "Submission failed";
+
+            if (Array.isArray(d.detail)) {
+                msg = d.detail.map(e => `${e.loc.slice(-1)[0]}: ${e.msg}`).join("\n");
+            } else if (typeof d.detail === "string") {
+                msg = d.detail;
+            } else {
+                msg = JSON.stringify(d.detail);
+            }
+
+            throw new Error(msg);
+        }
+
+        // ✅ Success → move forward
+        document.getElementById("surveyContainer").style.display = "none";
+        document.getElementById("referralModal").style.display = "flex";
+        window.scrollTo(0, 0);
+
+    } catch (e) {
+        alert("❌ " + e.message);
+
+        // 🔁 Allow retry ONLY if failed
+        isSubmitting = false;
+        btn.disabled = false;
+        btn.innerText = "Submit";
+    }
+}
+
+
+async function submitReferral() {
+    const source = document.getElementById("referral_source").value;
+
+    if (source) {
+        await fetch("http://127.0.0.1:8000/track-referral", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ source })
+        });
+    }
+
+    showThankYou();
+}
+
+function skipReferral() {
+    showThankYou();
+}
+
+function showThankYou() {
+    document.getElementById("referralModal").style.display = "none";
+    document.getElementById("surveyContainer").style.display = "none";
+    document.getElementById("thankYouScreen").style.display = "block";
+    window.scrollTo(0, 0);
+}
+
+</script>
+</body>
+</html>

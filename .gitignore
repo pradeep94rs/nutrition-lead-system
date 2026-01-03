@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+.env
+.venv/
+
+# Secrets
+service_account.json
+
+# OS
+.DS_Store
+
+main-copy.py
