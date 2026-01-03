@@ -332,6 +332,7 @@ There is no obligation to join anything.
 </div>
 
 <script>
+const API_BASE = "https://nutrition-lead-system-production.up.railway.app";
 let isSubmitting = false;
 
 const getChecked = name =>
@@ -454,11 +455,12 @@ async function submitFinal() {
             consent: true
         };
 
-        const r = await fetch("http://127.0.0.1:8000/submit-lead", {
+        const r = await fetch(`${API_BASE}/submit-lead`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
         });
+
 
         const d = await r.json();
 
@@ -496,7 +498,7 @@ async function submitReferral() {
     const source = document.getElementById("referral_source").value;
 
     if (source) {
-        await fetch("http://127.0.0.1:8000/track-referral", {
+        await fetch(`${API_BASE}/track-referral`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ source })
