@@ -2,28 +2,40 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
-import requests, re, os, uuid
+import requests, re, os, uuid, json
 from datetime import datetime, timedelta
-from pathlib import Path
-import gspread
 import pytz
+import gspread
+from google.oauth2.service_account import Credentials
 
 # --------------------------------------------------
-# Environment & Base Dir
+# Environment
 # --------------------------------------------------
-BASE_DIR = Path(__file__).resolve().parent
-
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 GOOGLE_SHEET_ID = os.getenv("GOOGLE_SHEET_ID")
-GOOGLE_SERVICE_ACCOUNT_FILE = os.getenv(
-    "GOOGLE_SERVICE_ACCOUNT_FILE", "service_account.json"
-)
+GOOGLE_SERVICE_ACCOUNT_JSON = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON")
 
 # --------------------------------------------------
-# Google Sheet
+# Validate required env vars
 # --------------------------------------------------
-gc = gspread.service_account(filename=str(BASE_DIR / GOOGLE_SERVICE_ACCOUNT_FILE))
+if not GOOGLE_SHEET_ID:
+    raise RuntimeError("Missing GOOGLE_SHEET_ID")
+
+if not GOOGLE_SERVICE_ACCOUNT_JSON:
+    raise RuntimeError("Missing GOOGLE_SERVICE_ACCOUNT_JSON")
+
+# --------------------------------------------------
+# Google Sheet (ENV-based auth)
+# --------------------------------------------------
+creds_dict = json.loads(GOOGLE_SERVICE_ACCOUNT_JSON)
+
+creds = Credentials.from_service_account_info(
+    creds_dict,
+    scopes=["https://www.googleapis.com/auth/spreadsheets"]
+)
+
+gc = gspread.authorize(creds)
 sheet = gc.open_by_key(GOOGLE_SHEET_ID).sheet1
 
 # --------------------------------------------------
@@ -73,6 +85,7 @@ class Referral(BaseModel):
 def ist_now():
     return datetime.now(pytz.timezone("Asia/Kolkata"))
 
+
 def get_recent(contact):
     rows = sheet.get_all_records()
     recent = []
@@ -83,12 +96,14 @@ def get_recent(contact):
                 recent.append(r)
     return recent
 
+
 def wait_time(first_time):
     reset = first_time + timedelta(hours=24)
     diff = reset - ist_now()
     h = diff.seconds // 3600
     m = (diff.seconds % 3600) // 60
     return f"{h} hours {m} minutes"
+
 
 def send_telegram(msg):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
@@ -178,7 +193,7 @@ def track_referral(ref: Referral):
     return {"status": "ok"}
 
 # --------------------------------------------------
-# Railway / Local Run
+# Local run (ignored on Railway)
 # --------------------------------------------------
 if __name__ == "__main__":
     import uvicorn
