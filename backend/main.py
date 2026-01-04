@@ -46,7 +46,7 @@ app = FastAPI(title="Health Clarity API")
 # TEMP: allow all (lock to Netlify domain after deploy)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://poetic-smakager-e36275.netlify.app"],
+    allow_origins=["https://nutrition-lead-system.pages.dev"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
