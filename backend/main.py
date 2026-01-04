@@ -36,7 +36,10 @@ creds = Credentials.from_service_account_info(
 )
 
 gc = gspread.authorize(creds)
-sheet = gc.open_by_key(GOOGLE_SHEET_ID).sheet1
+spreadsheet = gc.open_by_key(GOOGLE_SHEET_ID)
+
+leads_sheet = spreadsheet.worksheet("Leads")
+referral_sheet = spreadsheet.worksheet("Referral_Source_Count")
 
 # --------------------------------------------------
 # App
@@ -138,7 +141,7 @@ def submit_lead(lead: Lead):
     lead_id = uuid.uuid4().hex[:8].upper()
     now = ist_now().isoformat()
 
-    sheet.append_row([
+    leads_sheet.append_row([
         lead_id,
         now,
         lead.name,
@@ -180,17 +183,20 @@ def submit_lead(lead: Lead):
 
 @app.post("/track-referral")
 def track_referral(ref: Referral):
-    sheet.append_row([
-        "REFERRAL",
-        ist_now().isoformat(),
-        "", "", "", "", "", "",
-        "", "", "", "",
-        "", "", "",
-        ref.source,
-        "",
-        "REFERRAL"
-    ])
-    return {"status": "ok"}
+    source = ref.source.strip()
+
+    records = referral_sheet.get_all_records()
+
+    for idx, row in enumerate(records, start=2):  # row 2 = first data row
+        if row["source"].lower() == source.lower():
+            current = int(row.get("count", 0))
+            referral_sheet.update_cell(idx, 2, current + 1)
+            return {"status": "ok", "source": source}
+
+    # Fallback: if source not found, append it
+    referral_sheet.append_row([source, 1])
+    return {"status": "ok", "source": source}
+
 
 # --------------------------------------------------
 # Local run (ignored on Railway)
