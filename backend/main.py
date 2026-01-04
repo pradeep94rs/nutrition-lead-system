@@ -90,11 +90,21 @@ def ist_now():
 
 
 def get_recent(contact):
-    rows = sheet.get_all_records()
+    try:
+        rows = leads_sheet.get_all_records()
+    except Exception:
+        return []
+
     recent = []
     for r in reversed(rows):
         if str(r.get("contact")) == str(contact):
-            t = datetime.fromisoformat(r["submitted_at"])
+            ts = r.get("submitted_at")
+            if not ts:
+                continue
+            try:
+                t = datetime.fromisoformat(ts)
+            except Exception:
+                continue
             if ist_now() - t <= timedelta(hours=24):
                 recent.append(r)
     return recent
