@@ -10,11 +10,7 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 30px 10px;
-    background:
-        linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
-        url("https://fmcggurus.com/wp-content/uploads/2019/06/apple-blue-background-close-up-1353366.jpg");
-    background-size: cover;
-    background-attachment: fixed;
+    background: linear-gradient(135deg, #f0fff4 0%, #d9f7e4 50%, #b7e6c9 100%);
 }
 
 .error-text {
@@ -88,6 +84,8 @@ input[readonly] { background: #eee; }
     margin-bottom: 10px;
 }
 
+.checkbox-item { cursor: pointer; }
+
 .checkbox-item span {
     white-space: normal;
     line-height: 1.4;
@@ -157,7 +155,7 @@ There is no obligation to join anything.
        inputmode="numeric"
        maxlength="10"
        placeholder="10-digit WhatsApp number">
-<small id="contactError" style="color:red; display:none;">
+<small id="contactError" class="error-text" style="display:none; color:red;">
     WhatsApp number must be exactly 10 digits
 </small>
 
@@ -191,21 +189,21 @@ There is no obligation to join anything.
 <label>What is your primary health goal right now?<span class="required">*</span></label>
 
 <div class="checkbox-group">
-<div class="checkbox-item">
+<label class="checkbox-item">
 <input type="checkbox" id="goal_loss" name="primary_goals" value="Weight loss">
 <span>Weight loss</span>
-</div>
+</label>
 
-<div class="checkbox-item">
+<label class="checkbox-item">
 <input type="checkbox" id="goal_gain" name="primary_goals" value="Weight gain">
 <span>Weight gain</span>
-</div>
+</label>
 
-<div class="checkbox-item"><input type="checkbox" name="primary_goals" value="Hormonal balance"><span>Hormonal balance</span></div>
-<div class="checkbox-item"><input type="checkbox" name="primary_goals" value="Low energy / fatigue"><span>Low energy / fatigue</span></div>
-<div class="checkbox-item"><input type="checkbox" name="primary_goals" value="Digestion issues"><span>Digestion issues</span></div>
-<div class="checkbox-item"><input type="checkbox" name="primary_goals" value="Lifestyle discipline"><span>Lifestyle discipline</span></div>
-<div class="checkbox-item"><input type="checkbox" name="primary_goals" value="Overall health improvement"><span>Overall health improvement</span></div>
+<label class="checkbox-item"><input type="checkbox" name="primary_goals" value="Hormonal balance"><span>Hormonal balance</span></label>
+<label class="checkbox-item"><input type="checkbox" name="primary_goals" value="Low energy / fatigue"><span>Low energy / fatigue</span></label>
+<label class="checkbox-item"><input type="checkbox" name="primary_goals" value="Digestion issues"><span>Digestion issues</span></label>
+<label class="checkbox-item"><input type="checkbox" name="primary_goals" value="Lifestyle discipline"><span>Lifestyle discipline</span></label>
+<label class="checkbox-item"><input type="checkbox" name="primary_goals" value="Overall health improvement"><span>Overall health improvement</span></label>
 </div>
 
 <label>How long have you been facing this issue?<span class="required">*</span></label>
@@ -238,14 +236,14 @@ There is no obligation to join anything.
 
 <label>What do you feel is your biggest challenge right now?<span class="required">*</span></label>
 <div class="checkbox-group">
-<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Lack of consistency"><span>Lack of consistency</span></div>
-<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Emotional eating"><span>Emotional eating</span></div>
-<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Stress"><span>Stress</span></div>
-<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Low energy"><span>Low energy</span></div>
-<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="No proper guidance"><span>No proper guidance</span></div>
-<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="No support system"><span>No support system</span></div>
-<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Confused with too much information"><span>Confused with too much information</span></div>
-<div class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Time management"><span>Time management</span></div>
+<label class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Lack of consistency"><span>Lack of consistency</span></label>
+<label class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Emotional eating"><span>Emotional eating</span></label>
+<label class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Stress"><span>Stress</span></label>
+<label class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Low energy"><span>Low energy</span></label>
+<label class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="No proper guidance"><span>No proper guidance</span></label>
+<label class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="No support system"><span>No support system</span></label>
+<label class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Confused with too much information"><span>Confused with too much information</span></label>
+<label class="checkbox-item"><input type="checkbox" name="biggest_challenges" value="Time management"><span>Time management</span></label>
 </div>
 
 <div class="buttons">
@@ -260,6 +258,7 @@ There is no obligation to join anything.
 
 <label>On a scale of 1–10, how important is improving your health for you right now? (1 = Not important, 10 = Extremely important)<span class="required">*</span></label>
 <input type="number" min="1" max="10" id="health_importance_score">
+<small id="healthError" class="error-text">Health importance score must be between 1 and 10</small>
 
 <label>Have you tried anything earlier to improve your health?<span class="required">*</span></label>
 <select id="past_attempts">
@@ -289,9 +288,9 @@ There is no obligation to join anything.
 
 <label>Which language are you comfortable with?<span class="required">*</span></label>
 <div class="checkbox-group">
-<div class="checkbox-item"><input type="checkbox" name="preferred_languages" value="English"><span>English</span></div>
-<div class="checkbox-item"><input type="checkbox" name="preferred_languages" value="Kannada"><span>Kannada</span></div>
-<div class="checkbox-item"><input type="checkbox" name="preferred_languages" value="Hindi"><span>Hindi</span></div>
+<label class="checkbox-item"><input type="checkbox" name="preferred_languages" value="Kannada"><span>Kannada</span></label>
+<label class="checkbox-item"><input type="checkbox" name="preferred_languages" value="English"><span>English</span></label>
+<label class="checkbox-item"><input type="checkbox" name="preferred_languages" value="Hindi"><span>Hindi</span></label>
 </div>
 
 <div class="buttons">
@@ -360,10 +359,64 @@ function nextStep(s){ if(validateStep(s)){ step(s,s+1); } }
 function prevStep(s){ step(s,s-1); }
 function step(a,b){ document.getElementById(`step${a}`).classList.remove("active"); document.getElementById(`step${b}`).classList.add("active"); updateIndicator(b); }
 
-document.getElementById("contact").addEventListener("input", () => {
-    document.getElementById("contact").classList.remove("error");
-    document.getElementById("contactError").style.display = "none";
-});
+    const contactEl = document.getElementById('contact');
+    const contactErrEl = document.getElementById('contactError');
+
+    function validateContactLive() {
+        const v = contactEl.value.trim();
+        if (!v) {
+            showFieldError(contactEl, 'Field required');
+            return false;
+        }
+        if (!/^\d{10}$/.test(v)) {
+            showFieldError(contactEl, 'WhatsApp number must be exactly 10 digits');
+            return false;
+        }
+        clearFieldError(contactEl);
+        return true;
+    }
+
+    contactEl.addEventListener('input', () => {
+        // live validate but don't be aggressive — show error whenever input is present and invalid
+        if (contactEl.value.trim().length === 0) {
+            clearFieldError(contactEl);
+            return;
+        }
+        validateContactLive();
+    });
+
+    contactEl.addEventListener('blur', validateContactLive);
+
+    const healthEl = document.getElementById("health_importance_score");
+    const healthErr = document.getElementById("healthError");
+    healthEl.addEventListener("input", () => {
+        const v = Number(healthEl.value);
+        if (!healthEl.value || isNaN(v) || v < 1 || v > 10) {
+            healthEl.classList.add("error");
+            healthErr.style.display = "block";
+        } else {
+            healthEl.classList.remove("error");
+            healthErr.style.display = "none";
+        }
+    });
+
+    // Generic live validation for required fields (non-checkbox)
+    document.querySelectorAll('input:not([type=checkbox]):not([readonly]), select, textarea').forEach(el => {
+        el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => {
+            if (el.type === 'number') return; // handled separately
+            if (el.value && el.value.toString().trim()) {
+                clearFieldError(el);
+            }
+        });
+    });
+
+    // Checkbox groups: clear group error when any checkbox changes
+    document.querySelectorAll('.checkbox-group').forEach(group => {
+        group.addEventListener('change', () => {
+            const err = group.querySelector('.group-error');
+            if (err) err.style.display = 'none';
+        });
+    });
 
 
 function validateStep(step) {
@@ -378,10 +431,12 @@ function validateStep(step) {
     );
 
     for (const f of fields) {
-        if (!f.value || !f.value.trim()) {
-            alert(`${f.id || "Field"}: Field required`);
+        if (!f.value || !f.value.toString().trim()) {
+            showFieldError(f, 'Field required');
             f.focus();
             return false;
+        } else {
+            clearFieldError(f);
         }
     }
 
@@ -393,11 +448,10 @@ function validateStep(step) {
     };
 
     if (rules[step]) {
-        const checked = el.querySelectorAll(
-            `input[name="${rules[step]}"]:checked`
-        );
+        const checked = el.querySelectorAll(`input[name="${rules[step]}"]:checked`);
         if (checked.length === 0) {
-            alert("Select at least one option");
+            const group = el.querySelector('.checkbox-group');
+            showCheckboxGroupError(group, 'Select at least one option');
             return false;
         }
     }
@@ -432,6 +486,40 @@ function validateStep(step) {
     }
 
     return true;
+}
+
+function showFieldError(el, msg) {
+    el.classList.add('error');
+    // prefer existing sibling error if present
+    let existing = el.nextElementSibling;
+    if (existing && existing.classList && existing.classList.contains('error-text')) {
+        existing.innerText = msg;
+        existing.style.display = 'block';
+        return;
+    }
+    const s = document.createElement('div');
+    s.className = 'error-text';
+    s.innerText = msg;
+    el.insertAdjacentElement('afterend', s);
+}
+
+function clearFieldError(el) {
+    el.classList.remove('error');
+    let existing = el.nextElementSibling;
+    if (existing && existing.classList && existing.classList.contains('error-text')) {
+        existing.style.display = 'none';
+    }
+}
+
+function showCheckboxGroupError(group, msg) {
+    if (!group) return;
+    let existing = group.querySelector('.group-error');
+    if (existing) { existing.innerText = msg; existing.style.display = 'block'; return; }
+    const s = document.createElement('div');
+    s.className = 'error-text group-error';
+    s.style.marginTop = '6px';
+    s.innerText = msg;
+    group.appendChild(s);
 }
 
 
